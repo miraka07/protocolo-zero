@@ -747,13 +747,27 @@ footer .wrap{display:flex;flex-direction:column;justify-content:center;align-ite
   border-left: 3px solid rgba(74, 222, 128, 0.7);
   background: linear-gradient(160deg, rgba(168, 85, 247, 0.08), rgba(74, 222, 128, 0.04));
 }
+@media (max-width: 900px) {
+  .nav > nav,
+  .nav__cta,
+  .nav .nav__cta {
+    display: none !important;
+  }
+}
+
 @media (max-width: 768px) {
   .dr-grid {
     grid-template-columns: 1fr;
   }
 
+  /* Garantir que a CTA da navbar nunca apareça no grid mobile de 44px */
+  .nav__cta,
+  .nav .nav__cta {
+    display: none !important;
+  }
+
   /* CTA Button Mobile Responsiveness */
-  .btn {
+  .btn:not(.nav__cta) {
     white-space: normal !important;
     text-align: center !important;
     line-height: 1.25 !important;
@@ -767,7 +781,7 @@ footer .wrap{display:flex;flex-direction:column;justify-content:center;align-ite
     align-items: center;
     justify-content: center;
   }
-  .btn--lg {
+  .btn--lg:not(.nav__cta) {
     min-height: 58px;
     padding: 14px 20px;
     font-size: clamp(14px, 4vw, 16.5px);
@@ -807,14 +821,18 @@ footer .wrap{display:flex;flex-direction:column;justify-content:center;align-ite
 }
 
 @media (max-width: 480px) {
-  .btn {
+  .nav__cta,
+  .nav .nav__cta {
+    display: none !important;
+  }
+  .btn:not(.nav__cta) {
     padding: 12px 14px !important;
     font-size: clamp(13px, 3.8vw, 14.5px) !important;
     gap: 8px;
     min-height: 50px;
     border-radius: 999px;
   }
-  .btn--lg {
+  .btn--lg:not(.nav__cta) {
     padding: 13px 14px !important;
     font-size: clamp(13.5px, 3.8vw, 15px) !important;
     min-height: 54px;
