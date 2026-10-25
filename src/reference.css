@@ -654,6 +654,31 @@ footer .wrap{display:flex;flex-direction:column;justify-content:center;align-ite
 .chat-code .fn { color: #60a5fa; }
 .chat-code .str { color: #4ade80; }
 .chat-code .cm { color: #94a3b8; font-style: italic; }
+.chat-code .diff-del {
+  display: block;
+  background: rgba(239, 68, 68, 0.12);
+  color: #fca5a5;
+  padding: 3px 8px;
+  border-left: 3px solid #ef4444;
+  margin: 3px 0;
+  border-radius: 2px;
+}
+.chat-code .diff-add {
+  display: block;
+  background: rgba(34, 197, 94, 0.12);
+  color: #86efac;
+  padding: 3px 8px;
+  border-left: 3px solid #22c55e;
+  margin: 3px 0;
+  border-radius: 2px;
+}
+.chat-code .diff-ctx {
+  display: block;
+  color: #64748b;
+  font-style: italic;
+  padding: 2px 6px;
+  margin: 2px 0;
+}
 .chat-typing {
   display: inline-flex;
   align-items: center;
