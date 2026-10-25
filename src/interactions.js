@@ -99,6 +99,7 @@
     const elRespBlocked = $('#simRespBlocked');
     const elRespZero = $('#simRespZero');
     const elZeroCode = $('#simZeroCode');
+    const elTrajectory = $('#simTrajectory');
     const elBadgesBlocked = $('#simBadgesBlocked');
     const elBadgesZero = $('#simBadgesZero');
 
@@ -142,6 +143,11 @@
       if (elRespBlocked) elRespBlocked.style.display = 'none';
       if (elRespZero) elRespZero.style.display = 'none';
       if (elZeroCode) { elZeroCode.style.display = 'none'; elZeroCode.innerHTML = ''; }
+      if (elTrajectory) {
+        elTrajectory.style.display = 'none';
+        const steps = elTrajectory.querySelectorAll('.agent-step');
+        steps.forEach(s => { s.style.opacity = '0'; s.style.transform = 'translateY(4px)'; });
+      }
       if (elBadgesBlocked) elBadgesBlocked.style.display = 'none';
       if (elBadgesZero) elBadgesZero.style.display = 'none';
     };
@@ -185,29 +191,44 @@
               }
               if (elBadgesBlocked) elBadgesBlocked.style.display = 'flex';
 
-              // Zero bypass streaming
-              if (elRespZero) {
-                elRespZero.style.display = 'block';
-                elRespZero.innerHTML = responseZeroIntro;
+              // Animate Antigravity Agent Trajectory
+              if (elTrajectory) {
+                elTrajectory.style.display = 'block';
+                const steps = elTrajectory.querySelectorAll('.agent-step');
+                steps.forEach((step, sIdx) => {
+                  setTimeout(() => {
+                    step.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+                    step.style.opacity = '1';
+                    step.style.transform = 'translateY(0)';
+                  }, sIdx * 80);
+                });
               }
-              if (elZeroCode) {
-                elZeroCode.style.display = 'block';
-                let codeIdx = 0;
-                const streamCode = () => {
-                  codeIdx += 15;
-                  elZeroCode.innerHTML = codeSnippet.slice(0, codeIdx) + (codeIdx < codeSnippet.length ? '<span class="cursor-blink"></span>' : '');
-                  if (codeIdx < codeSnippet.length) {
-                    currentTimeout = setTimeout(streamCode, 20);
-                  } else {
-                    elZeroCode.innerHTML = codeSnippet;
-                    if (elBadgesZero) elBadgesZero.style.display = 'flex';
-                    // Loop again after 9s
-                    currentTimeout = setTimeout(runSimulation, 9000);
-                  }
-                };
-                streamCode();
-              }
-            }, 900);
+
+              // Zero bypass response & code streaming
+              currentTimeout = setTimeout(() => {
+                if (elRespZero) {
+                  elRespZero.style.display = 'block';
+                  elRespZero.innerHTML = responseZeroIntro;
+                }
+                if (elZeroCode) {
+                  elZeroCode.style.display = 'block';
+                  let codeIdx = 0;
+                  const streamCode = () => {
+                    codeIdx += 15;
+                    elZeroCode.innerHTML = codeSnippet.slice(0, codeIdx) + (codeIdx < codeSnippet.length ? '<span class="cursor-blink"></span>' : '');
+                    if (codeIdx < codeSnippet.length) {
+                      currentTimeout = setTimeout(streamCode, 20);
+                    } else {
+                      elZeroCode.innerHTML = codeSnippet;
+                      if (elBadgesZero) elBadgesZero.style.display = 'flex';
+                      // Loop again after 10s
+                      currentTimeout = setTimeout(runSimulation, 10000);
+                    }
+                  };
+                  streamCode();
+                }
+              }, 900);
+            }, 700);
           }, 350);
         }
       };
